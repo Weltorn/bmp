@@ -118,10 +118,21 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="My_Engine.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="T_Config.h" />
     <ClInclude Include="T_Display.h" />
     <ClInclude Include="T_Engine.h" />
     <ClInclude Include="Util.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="bmp.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\Bing.bmp" />
+    <Image Include="res\walkinggirl74x115.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\jpg2.bin" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

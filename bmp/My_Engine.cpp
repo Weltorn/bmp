@@ -1,5 +1,6 @@
 #include "My_Engine.h"
 #include "Util.h"
+#include "resource.h"
 
 using namespace std;
 
@@ -34,7 +35,8 @@ void My_Engine::GameInit()
 	SetStretchBltMode(bufferDC, HALFTONE);
 
 	Bitmap* pBmp = NULL;
-	pBmp = Bitmap::FromFile(L".\\res\\island.bmp");
+	////pBmp = Bitmap::FromFile(L".\\res\\island.bmp");
+	pBmp = Bitmap::FromResource(m_hInstance, MAKEINTRESOURCE(IDB_SUNRISE));
 	Status status = pBmp->GetHBITMAP(NULL, &hbitmap);
 	if(status != S_OK)hbitmap = NULL;
 	delete pBmp;
@@ -81,60 +83,60 @@ void My_Engine::GameEnd()
 void My_Engine::GamePaint(HDC hdc)
 {
 
-	//if (GetTickCount() - startTime < T_LENGTH)
-	//{
-	//	HBITMAP oldBmp = (HBITMAP)SelectObject(layerDC, hbitmap);
-	//	BitBlt(bufferDC, 0, 0, wnd_width, wnd_height, layerDC, 0, 0, SRCCOPY);
-	//	RectF textRect; // 不断变化的文字区域
-	//	textRect.Width = (REAL)(2 * wnd_width - ratio*wnd_width / 10);
-	//	textRect.Height = (REAL)(2 * wnd_height - ratio*wnd_height / 10);
-	//	textRect.X = (REAL)(wnd_width - textRect.Width) / 2;
-	//	textRect.Y = (REAL)(wnd_height - textRect.Height) / 2;
-	//	// 根据当前文字区域宽计笋字号
-	//	int px = (int)(textRect.Width / 11);
-	//	REAL fsize = (REAL)((px * 72) / 96); // 根据每个字的像索计笢字号
-	//	Color color(rand() % 255, rand() % 255, rand() % 255, rand() % 255);
-	//	PaintText(hdc, textRect, L"HELLO WORLD", fsize, L"黑体", color);
-	//	SelectObject(layerDC, oldBmp);
-	//}
-	//// 如果超过指定的间隔时间，绘制分割
-	//if ((GetTickCount() - startTime >= T_LENGTH) && (GetTickCount() - startTime < 6 * T_LENGTH))
-	//{
-	//	// 获取当前5 X 5 = 25 个单元格内所有随机数
-	//	GetRandomNum(25, randCell);
-	//	for (int i = 0; i < rows *cols; i++)  //遍历所有单元格
-	//	{
-	//		// 将当前的单元格号转换成行、列号
-	//		int dx = i%cols;
-	//		int dy = i / cols;
-	//		// 读取随机数数组内的随机数，并转换为行、列号
-	//		int img_col = randCell[i] % cols;
-	//		int img_row = randCell[i] / cols;
-	//		// 在原始控像中提取对应随机数所在的图像绘制到当前的单元格内
-	//		PaintRegion(hdc, dx*cell_width, dy*cell_height,
-	//			img_col*cell_width, img_row*cell_height, cell_width, cell_height, 1);
+	if (GetTickCount() - startTime < T_LENGTH)
+	{
+		HBITMAP oldBmp = (HBITMAP)SelectObject(layerDC, hbitmap);
+		BitBlt(bufferDC, 0, 0, wnd_width, wnd_height, layerDC, 0, 0, SRCCOPY);
+		RectF textRect; // 不断变化的文字区域
+		textRect.Width = (REAL)(2 * wnd_width - ratio*wnd_width / 10);
+		textRect.Height = (REAL)(2 * wnd_height - ratio*wnd_height / 10);
+		textRect.X = (REAL)(wnd_width - textRect.Width) / 2;
+		textRect.Y = (REAL)(wnd_height - textRect.Height) / 2;
+		// 根据当前文字区域宽计笋字号
+		int px = (int)(textRect.Width / 11);
+		REAL fsize = (REAL)((px * 72) / 96); // 根据每个字的像索计笢字号
+		Color color(rand() % 255, rand() % 255, rand() % 255, rand() % 255);
+		PaintText(hdc, textRect, L"HELLO WORLD", fsize, L"黑体", color);
+		SelectObject(layerDC, oldBmp);
+	}
+	// 如果超过指定的间隔时间，绘制分割
+	if ((GetTickCount() - startTime >= T_LENGTH) && (GetTickCount() - startTime < 6 * T_LENGTH))
+	{
+		// 获取当前5 X 5 = 25 个单元格内所有随机数
+		GetRandomNum(25, randCell);
+		for (int i = 0; i < rows *cols; i++)  //遍历所有单元格
+		{
+			// 将当前的单元格号转换成行、列号
+			int dx = i%cols;
+			int dy = i / cols;
+			// 读取随机数数组内的随机数，并转换为行、列号
+			int img_col = randCell[i] % cols;
+			int img_row = randCell[i] / cols;
+			// 在原始控像中提取对应随机数所在的图像绘制到当前的单元格内
+			PaintRegion(hdc, dx*cell_width, dy*cell_height,
+				img_col*cell_width, img_row*cell_height, cell_width, cell_height, 1);
 
-	//	}
-	//	RECT mrect; // 在每个单元格外绘制臼色的矩形框
-	//	for (int r = 0; r < rows; r++)
-	//	{
-	//		for (int c = 0; c < cols; c++)
-	//		{
-	//			mrect.left = c*cell_width;
-	//			mrect.right = mrect.left + cell_width;
-	//			mrect.top = r *cell_height;
-	//			mrect.bottom = mrect.top + cell_height;
-	//			HPEN linePen = CreatePen(PS_SOLID, 1, RGB(255, 255, 255));
-	//			SelectObject(hdc, linePen);
-	//			SelectObject(hdc, GetStockObject(NULL_BRUSH));
-	//			Rectangle(hdc, mrect.left, mrect.top, mrect.right, mrect.bottom);
-	//			DeleteObject(linePen);
-	//		}			
-	//	}		
-	//}
-	////绘制少女和舞台
-	//if (GetTickCount() - startTime >= 2*T_LENGTH)
-	//{
+		}
+		RECT mrect; // 在每个单元格外绘制臼色的矩形框
+		for (int r = 0; r < rows; r++)
+		{
+			for (int c = 0; c < cols; c++)
+			{
+				mrect.left = c*cell_width;
+				mrect.right = mrect.left + cell_width;
+				mrect.top = r *cell_height;
+				mrect.bottom = mrect.top + cell_height;
+				HPEN linePen = CreatePen(PS_SOLID, 1, RGB(255, 255, 255));
+				SelectObject(hdc, linePen);
+				SelectObject(hdc, GetStockObject(NULL_BRUSH));
+				Rectangle(hdc, mrect.left, mrect.top, mrect.right, mrect.bottom);
+				DeleteObject(linePen);
+			}			
+		}		
+	}
+	//绘制少女和舞台
+	if (GetTickCount() - startTime >= 2*T_LENGTH)
+	{
 		Bitmap* pBmp = NULL;
 		DeleteObject(hbitmap); hbitmap = NULL;
 		pBmp = Bitmap::FromFile(L".\\res\\stage.jpg");
@@ -186,11 +188,16 @@ void My_Engine::GamePaint(HDC hdc)
 				dir = DIR_RIGHT;
 		}
 		
-		
-
 		// 间隔时间重新计时
-	//	if (GetTickCount() - startTime >= 6 * T_LENGTH) startTime = GetTickCount();
-	//}
+		if (GetTickCount() - startTime >= 6 * T_LENGTH)
+		{
+			pBmp = Bitmap::FromResource(m_hInstance, MAKEINTRESOURCE(IDB_SUNRISE));
+			Status status = pBmp->GetHBITMAP(NULL, &hbitmap);
+			if (status != S_OK)hbitmap = NULL;
+			delete pBmp;
+			startTime = GetTickCount();
+		}
+	}
 		
 }
 // 根据KM_ACTION值处理按键行为
