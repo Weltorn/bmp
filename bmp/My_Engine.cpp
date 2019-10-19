@@ -35,7 +35,6 @@ void My_Engine::GameInit()
 	SetStretchBltMode(bufferDC, HALFTONE);
 
 	Bitmap* pBmp = NULL;
-	////pBmp = Bitmap::FromFile(L".\\res\\island.bmp");
 	pBmp = Bitmap::FromResource(m_hInstance, MAKEINTRESOURCE(IDB_SUNRISE));
 	Status status = pBmp->GetHBITMAP(NULL, &hbitmap);
 	if(status != S_OK)hbitmap = NULL;
@@ -100,7 +99,7 @@ void My_Engine::GamePaint(HDC hdc)
 		SelectObject(layerDC, oldBmp);
 	}
 	// 如果超过指定的间隔时间，绘制分割
-	if ((GetTickCount() - startTime >= T_LENGTH) && (GetTickCount() - startTime < 6 * T_LENGTH))
+	if ((GetTickCount() - startTime >= T_LENGTH) && (GetTickCount() - startTime < 2 * T_LENGTH))
 	{
 		// 获取当前5 X 5 = 25 个单元格内所有随机数
 		GetRandomNum(25, randCell);
@@ -216,7 +215,7 @@ void My_Engine::GameKeyAction(int ActionType)
 		 }
 		// 如果当前鼠标位罢与窗口启动时的坐标不一致
 		// 表示鼠标已经移动， 发送退出程序的消息
-		// if (mousePT.x != x && mousePT.y != y) PostQuitMessage(0);
+		 //if (mousePT.x != x && mousePT.y != y) PostQuitMessage(0);
 	 }
  }
 
