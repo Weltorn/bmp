@@ -44,7 +44,10 @@ void My_Engine::GameEnd()
 // 根据GAME_STATE值显示游戏界面
 void My_Engine::GamePaint(HDC hdc)
 {
-	
+	int apt[6] = { 0,0,50,0,0,50 };
+	Poly triangle= Poly(apt,3);
+	triangle.setOffset(200,300);
+	triangle.draw(hdc,RGB(255,0,0));
 		
 }
 // 根据KM_ACTION值处理按键行为

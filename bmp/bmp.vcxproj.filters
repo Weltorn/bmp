@@ -30,6 +30,12 @@
     <ClCompile Include="Util.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Subject.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Poly.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="My_Engine.h">
@@ -48,6 +54,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Subject.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Poly.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

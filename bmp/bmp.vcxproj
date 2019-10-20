@@ -112,13 +112,17 @@
   <ItemGroup>
     <ClCompile Include="CheckMain.cpp" />
     <ClCompile Include="My_Engine.cpp" />
+    <ClCompile Include="Poly.cpp" />
+    <ClCompile Include="Subject.cpp" />
     <ClCompile Include="T_Display.cpp" />
     <ClCompile Include="T_Engine.cpp" />
     <ClCompile Include="Util.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="My_Engine.h" />
+    <ClInclude Include="Poly.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Subject.h" />
     <ClInclude Include="T_Config.h" />
     <ClInclude Include="T_Display.h" />
     <ClInclude Include="T_Engine.h" />
