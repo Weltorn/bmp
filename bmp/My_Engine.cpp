@@ -52,7 +52,7 @@ void My_Engine::GameEnd()
 void My_Engine::GamePaint(HDC hdc)
 {
 	triangle.setOffset(200,300);
-	triangle1.setOffset(130, 300);
+	triangle1.setOffset(150, 300);
 	triangle.draw(hdc);
 	triangle1.draw(hdc);
 	collisionManager.checkCollision();

@@ -51,7 +51,7 @@ vector<int> CollisionManager::getProjectionsOn(POINT axis, Subject* su1, Subject
 	int count2 = su2->getIcount();
 	POINT* apt2 = (POINT*)malloc(count2 * sizeof(POINT));
 	su2->getApt(apt2);
-	offset = su1->getOffset();
+	offset = su2->getOffset();
 	for (int i = 0; i<count2; i++)
 	{
 		apt2[i].x = apt2[i].x + offset.x;
@@ -101,11 +101,11 @@ vector<int> CollisionManager::getProjectionsOn(POINT axis, Subject* su1, Subject
 	for (int i = 2; i < count1; i++)
 	{
 		int n = axis.x*apt2[i].x + axis.y*apt2[i].y;
-		if (n < projections.at(0))
+		if (n < projections.at(2))
 		{
 			projections[0] = n;
 		}
-		if (n > projections.at(1))
+		if (n > projections.at(3))
 		{
 			projections[0] = n;
 		}
@@ -120,9 +120,10 @@ bool CollisionManager::isCollision(Subject* su1, Subject* su2)
 	vector<POINT> axies2 = getAxies(su2);
 	axies.insert(axies.end(),axies2.begin(),axies2.end());
 
-	vector<int> projections;
+	
 	for (int i = 0; i < axies.size(); i++)
 	{
+		vector<int> projections;
 		projections = getProjectionsOn(axies.at(i), su1, su2);
 		if (projections.at(0) > projections.at(3) || projections.at(1) < projections.at(2))
 			return false;
