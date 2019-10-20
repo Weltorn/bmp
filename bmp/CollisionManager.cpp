@@ -82,7 +82,7 @@ vector<int> CollisionManager::getProjectionsOn(POINT axis, Subject* su1, Subject
 		}
 		if (n > projections.at(1))
 		{
-			projections[0] = n;
+			projections[1] = n;
 		}
 	}
 
@@ -103,11 +103,11 @@ vector<int> CollisionManager::getProjectionsOn(POINT axis, Subject* su1, Subject
 		int n = axis.x*apt2[i].x + axis.y*apt2[i].y;
 		if (n < projections.at(2))
 		{
-			projections[0] = n;
+			projections[2] = n;
 		}
 		if (n > projections.at(3))
 		{
-			projections[0] = n;
+			projections[3] = n;
 		}
 	}
 	delete apt1;

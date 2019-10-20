@@ -26,6 +26,8 @@ private:
 	POINT mousePT;
 
 	Poly triangle, triangle1;
+	int triangle_x = 0, triangle_y = 0;
+	int triangle1_x = 0, triangle1_y = 0;
 	CollisionManager collisionManager;
 public:
 	My_Engine(HINSTANCE hInstance, LPCTSTR szWindowClass, LPCTSTR szTitle,
