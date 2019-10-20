@@ -35,10 +35,10 @@ void My_Engine::GameInit()
 	SetStretchBltMode(bufferDC, HALFTONE);
 
 	Bitmap* pBmp = NULL;
-	pBmp = Bitmap::FromResource(m_hInstance, MAKEINTRESOURCE(IDB_SUNRISE));
+	/*pBmp = Bitmap::FromResource(m_hInstance, MAKEINTRESOURCE(IDB_SUNRISE));
 	Status status = pBmp->GetHBITMAP(NULL, &hbitmap);
 	if(status != S_OK)hbitmap = NULL;
-	delete pBmp;
+	delete pBmp;*/
 	mousePT.x = 0;
 	mousePT.y = 0;
 	rows = 5;
@@ -53,25 +53,7 @@ void My_Engine::GameInit()
 // 游戏逻辑处理
 void My_Engine::GameLogic()
 {
-	GameKeyAction();
-	if (enlarge == true)
-	{
-		ratio = ratio - 1;
-		if (ratio < 0)
-		{
-			ratio = 0;
-			enlarge = false;
-		}
-	}
-	if (enlarge == false)
-	{
-		ratio = ratio + 1;
-		if (ratio > 20)
-		{
-			ratio = 20;
-			enlarge = true;
-		}
-	}
+	
 }
 // 游戏结束处理
 void My_Engine::GameEnd()
@@ -81,122 +63,38 @@ void My_Engine::GameEnd()
 // 根据GAME_STATE值显示游戏界面
 void My_Engine::GamePaint(HDC hdc)
 {
-
-	if (GetTickCount() - startTime < T_LENGTH)
+	int nWidth = 400;
+	int nHeight = 400;
+	BYTE* picData = new BYTE[nWidth*nHeight * 4];
+	memset(picData, 0, nWidth*nHeight * 4);
+	Bitmap bm(nWidth, nHeight, nWidth * 4, PixelFormat32bppARGB, picData);
+	for (int row = 0; row<nHeight; ++row)
 	{
-		HBITMAP oldBmp = (HBITMAP)SelectObject(layerDC, hbitmap);
-		BitBlt(bufferDC, 0, 0, wnd_width, wnd_height, layerDC, 0, 0, SRCCOPY);
-		RectF textRect; // 不断变化的文字区域
-		textRect.Width = (REAL)(2 * wnd_width - ratio*wnd_width / 10);
-		textRect.Height = (REAL)(2 * wnd_height - ratio*wnd_height / 10);
-		textRect.X = (REAL)(wnd_width - textRect.Width) / 2;
-		textRect.Y = (REAL)(wnd_height - textRect.Height) / 2;
-		// 根据当前文字区域宽计笋字号
-		int px = (int)(textRect.Width / 11);
-		REAL fsize = (REAL)((px * 72) / 96); // 根据每个字的像索计笢字号
-		Color color(rand() % 255, rand() % 255, rand() % 255, rand() % 255);
-		PaintText(hdc, textRect, L"HELLO WORLD", fsize, L"黑体", color);
-		SelectObject(layerDC, oldBmp);
-	}
-	// 如果超过指定的间隔时间，绘制分割
-	if ((GetTickCount() - startTime >= T_LENGTH) && (GetTickCount() - startTime < 2 * T_LENGTH))
-	{
-		// 获取当前5 X 5 = 25 个单元格内所有随机数
-		GetRandomNum(25, randCell);
-		for (int i = 0; i < rows *cols; i++)  //遍历所有单元格
-		{
-			// 将当前的单元格号转换成行、列号
-			int dx = i%cols;
-			int dy = i / cols;
-			// 读取随机数数组内的随机数，并转换为行、列号
-			int img_col = randCell[i] % cols;
-			int img_row = randCell[i] / cols;
-			// 在原始控像中提取对应随机数所在的图像绘制到当前的单元格内
-			PaintRegion(hdc, dx*cell_width, dy*cell_height,
-				img_col*cell_width, img_row*cell_height, cell_width, cell_height, 1);
-
-		}
-		RECT mrect; // 在每个单元格外绘制臼色的矩形框
-		for (int r = 0; r < rows; r++)
-		{
-			for (int c = 0; c < cols; c++)
-			{
-				mrect.left = c*cell_width;
-				mrect.right = mrect.left + cell_width;
-				mrect.top = r *cell_height;
-				mrect.bottom = mrect.top + cell_height;
-				HPEN linePen = CreatePen(PS_SOLID, 1, RGB(255, 255, 255));
-				SelectObject(hdc, linePen);
-				SelectObject(hdc, GetStockObject(NULL_BRUSH));
-				Rectangle(hdc, mrect.left, mrect.top, mrect.right, mrect.bottom);
-				DeleteObject(linePen);
-			}			
-		}		
-	}
-	//绘制少女和舞台
-	if (GetTickCount() - startTime >= 2*T_LENGTH)
-	{
-		Bitmap* pBmp = NULL;
-		DeleteObject(hbitmap); hbitmap = NULL;
-		pBmp = Bitmap::FromFile(L".\\res\\stage.jpg");
-		Status status = pBmp->GetHBITMAP(NULL, &hbitmap);
-		if (status != S_OK)hbitmap = NULL;
-		delete pBmp;
-		DIBSECTION dib;
-		// 如果位图信息读取失败
-		if (GetObject(hbitmap, sizeof(DIBSECTION), &dib) != sizeof(DIBSECTION))
-		{
-			DeleteObject(hbitmap);
-			hbitmap = 0;
-			return;
-		}
-		bmpWidth = dib.dsBmih.biWidth;
-		bmpHeight = dib.dsBmih.biHeight;
-
-		HBITMAP oldBmp = (HBITMAP)SelectObject(layerDC, hbitmap);
-		StretchBlt(bufferDC, 0, 0, wnd_width, wnd_height, layerDC, 0, 0, bmpWidth, bmpHeight, SRCCOPY);
-		SelectObject(layerDC, oldBmp);
-		
-		DeleteObject(hbitmap); hbitmap = NULL;
-		pBmp = Bitmap::FromFile(L".\\res\\walkinggirl74x115.png");
-		status = pBmp->GetHBITMAP(NULL, &hbitmap);
-		if (status != S_OK)hbitmap = NULL;
-		delete pBmp;
-		// 如果位图信息读取失败
-		if (GetObject(hbitmap, sizeof(DIBSECTION), &dib) != sizeof(DIBSECTION))
-		{
-			Util::myprintf(L"加载图片失败");
-			DeleteObject(hbitmap);
-			hbitmap = 0;
-			return;
-		}
-		bmpWidth = dib.dsBmih.biWidth;
-		bmpHeight = dib.dsBmih.biHeight;
-		if (dir == DIR_RIGHT) {
-			PaintRegion(hdc, px, py, girlstep * 74, 0, 74, 115, 1);
-			px = px + 10;
-			if (++girlstep > 6)girlstep = 0;
-			if (px > wnd_width)
-				dir = DIR_LEFT;
-		}
-		if (dir == DIR_LEFT) {
-			PaintRegion(hdc, px, py, girlstep * 74, 0, 74, 115, 1, TRANS_HFLIP_NOROT);
-			px = px - 10;
-			if (++girlstep > 6)girlstep = 0;
-			if (px < 0)
-				dir = DIR_RIGHT;
-		}
-		
-		// 间隔时间重新计时
-		if (GetTickCount() - startTime >= 6 * T_LENGTH)
-		{
-			pBmp = Bitmap::FromResource(m_hInstance, MAKEINTRESOURCE(IDB_SUNRISE));
-			Status status = pBmp->GetHBITMAP(NULL, &hbitmap);
-			if (status != S_OK)hbitmap = NULL;
-			delete pBmp;
-			startTime = GetTickCount();
+		for (int col = 0; col<nWidth; ++col)
+		{		
+			picData[row*nWidth * 4 + col * 4 + 2] = 255;	//Red
+			picData[row*nWidth * 4 + col * 4 + 3] = 255;	//Alpha			
 		}
 	}
+
+	//HBITMAP redbmp = CreateBlankBMP(250,250, RGB(255, 0, 0));
+	HBITMAP redbmp = NULL;
+	bm.GetHBITMAP(Color(0,0,0,0),&redbmp);
+	SelectObject(hdc, redbmp);
+
+	HBITMAP bluebmp = CreateBlankBMP(250, 250, RGB(0, 0, 255));
+	SelectObject(layerDC, bluebmp);
+
+	BLENDFUNCTION blendfunc = { AC_SRC_OVER, 0, 100, 0 };
+	AlphaBlend(hdc,
+		0, 0, 200, 200,
+		layerDC,
+		0, 0, 200, 200,
+		blendfunc);
+
+
+
+	
 		
 }
 // 根据KM_ACTION值处理按键行为
