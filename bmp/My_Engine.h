@@ -18,24 +18,10 @@ class My_Engine :
 {
 private:
 	HDC layerDC;
-	int bmpWidth, bmpHeight;
-	int alpha;
-
-	static const long T_LENGTH = 4500;
-	int wnd_width, wnd_height;
 	HBITMAP hbitmap;
-	int cell_width, cell_height;
-	int rows, cols;
 
-	long startTime;
+	int wnd_width, wnd_height;
 	POINT mousePT;
-	int* randCell;
-	int ratio;
-	bool enlarge;
-
-	int girlstep = 0;
-	int px = -74, py = 570;
-	int dir = DIR_RIGHT;
 public:
 	My_Engine(HINSTANCE hInstance, LPCTSTR szWindowClass, LPCTSTR szTitle,
 		WORD Icon = NULL, WORD SmIcon = NULL,

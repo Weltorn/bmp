@@ -15,7 +15,6 @@ My_Engine::My_Engine(HINSTANCE hInstance, LPCTSTR szWindowClass, LPCTSTR szTitle
 	wnd_width = iWidth;
 	wnd_height = iHeight;
 
-	alpha = 0;
 	HDC hdc = ::GetDC(m_hWnd);
 	layerDC = ::CreateCompatibleDC(hdc);
 	::ReleaseDC(m_hWnd, hdc);
@@ -24,31 +23,13 @@ My_Engine::My_Engine(HINSTANCE hInstance, LPCTSTR szWindowClass, LPCTSTR szTitle
 
 My_Engine::~My_Engine()
 {
-	delete randCell;
 }
 
 
 
 void My_Engine::GameInit()
 {	
-	//防止图片缩小时失真
-	SetStretchBltMode(bufferDC, HALFTONE);
-
-	Bitmap* pBmp = NULL;
-	/*pBmp = Bitmap::FromResource(m_hInstance, MAKEINTRESOURCE(IDB_SUNRISE));
-	Status status = pBmp->GetHBITMAP(NULL, &hbitmap);
-	if(status != S_OK)hbitmap = NULL;
-	delete pBmp;*/
-	mousePT.x = 0;
-	mousePT.y = 0;
-	rows = 5;
-	cols = 5;
-	cell_width = wnd_width / cols;
-	cell_height = wnd_height / rows;
-	startTime = GetTickCount();
-	randCell = new int[rows *cols];
-	ratio = 20;
-	enlarge = true;	
+	
 }
 // 游戏逻辑处理
 void My_Engine::GameLogic()
@@ -63,37 +44,6 @@ void My_Engine::GameEnd()
 // 根据GAME_STATE值显示游戏界面
 void My_Engine::GamePaint(HDC hdc)
 {
-	int nWidth = 400;
-	int nHeight = 400;
-	BYTE* picData = new BYTE[nWidth*nHeight * 4];
-	memset(picData, 0, nWidth*nHeight * 4);
-	Bitmap bm(nWidth, nHeight, nWidth * 4, PixelFormat32bppARGB, picData);
-	for (int row = 0; row<nHeight; ++row)
-	{
-		for (int col = 0; col<nWidth; ++col)
-		{		
-			picData[row*nWidth * 4 + col * 4 + 2] = 255;	//Red
-			picData[row*nWidth * 4 + col * 4 + 3] = 255;	//Alpha			
-		}
-	}
-
-	//HBITMAP redbmp = CreateBlankBMP(250,250, RGB(255, 0, 0));
-	HBITMAP redbmp = NULL;
-	bm.GetHBITMAP(Color(0,0,0,0),&redbmp);
-	SelectObject(hdc, redbmp);
-
-	HBITMAP bluebmp = CreateBlankBMP(250, 250, RGB(0, 0, 255));
-	SelectObject(layerDC, bluebmp);
-
-	BLENDFUNCTION blendfunc = { AC_SRC_OVER, 0, 100, 0 };
-	AlphaBlend(hdc,
-		0, 0, 200, 200,
-		layerDC,
-		0, 0, 200, 200,
-		blendfunc);
-
-
-
 	
 		
 }
@@ -158,8 +108,8 @@ void My_Engine::GameKeyAction(int ActionType)
 		 hBitmap = 0;
 		 return FALSE;
 	 }
-	 bmpWidth = dib.dsBmih.biWidth;
-	 bmpHeight = dib.dsBmih.biHeight;
+	 //bmpWidth = dib.dsBmih.biWidth;
+	 //bmpHeight = dib.dsBmih.biHeight;
 	 return TRUE;
  }
 
