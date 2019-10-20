@@ -6,6 +6,7 @@
 #include <string.h>
 #include <AtlBase.h>
 #include "Poly.h"
+#include "CollisionManager.h"
 
 
 #ifdef WIN32
@@ -23,6 +24,9 @@ private:
 
 	int wnd_width, wnd_height;
 	POINT mousePT;
+
+	Poly triangle, triangle1;
+	CollisionManager collisionManager;
 public:
 	My_Engine(HINSTANCE hInstance, LPCTSTR szWindowClass, LPCTSTR szTitle,
 		WORD Icon = NULL, WORD SmIcon = NULL,

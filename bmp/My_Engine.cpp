@@ -29,7 +29,14 @@ My_Engine::~My_Engine()
 
 void My_Engine::GameInit()
 {	
-	
+	int apt[6] = { 0,0,50,0,0,50 };
+	triangle = Poly(apt, 3);
+
+	int apt1[6] = { 0,0,50,0,0,50 };
+	triangle1 = Poly(apt1, 3);
+
+	collisionManager.addSubject(&triangle);
+	collisionManager.addSubject(&triangle1);
 }
 // 游戏逻辑处理
 void My_Engine::GameLogic()
@@ -44,11 +51,11 @@ void My_Engine::GameEnd()
 // 根据GAME_STATE值显示游戏界面
 void My_Engine::GamePaint(HDC hdc)
 {
-	int apt[6] = { 0,0,50,0,0,50 };
-	Poly triangle= Poly(apt,3);
 	triangle.setOffset(200,300);
-	triangle.draw(hdc,RGB(255,0,0));
-		
+	triangle1.setOffset(130, 300);
+	triangle.draw(hdc);
+	triangle1.draw(hdc);
+	collisionManager.checkCollision();
 }
 // 根据KM_ACTION值处理按键行为
 void My_Engine::GameKeyAction(int ActionType)

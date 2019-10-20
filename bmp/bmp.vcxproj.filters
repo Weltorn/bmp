@@ -36,6 +36,9 @@
     <ClCompile Include="Poly.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="CollisionManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="My_Engine.h">
@@ -60,6 +63,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Poly.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionManager.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

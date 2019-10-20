@@ -54,5 +54,6 @@ void Poly::draw(HDC hdc,COLORREF color)
 }
 bool Poly::isCollision(Subject* target)
 {
+
 	return false;
 }

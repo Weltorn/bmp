@@ -20,7 +20,8 @@ public:
 
 	void setApt(int*, int num);
 	void setApt(POINT*, int num);
-	void getApt(POINT*);
+	int getApt(POINT*);
+	int getIcount();
 	void setColor(COLORREF color);
 	COLORREF getColor();
 	void setOffset(int px,int py);

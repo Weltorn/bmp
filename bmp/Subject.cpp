@@ -41,9 +41,15 @@ void Subject::setApt(POINT* vx, int num)
 	memcpy(apt, vx, sizeof(int)*num * 2);
 	icount = num;
 }
-void  Subject::getApt(POINT* outapt)
+int Subject::getApt(POINT* outapt)
 {
-	memcpy(outapt, apt, sizeof(int)*icount * 2);
+	if(outapt != NULL)
+		memcpy(outapt, apt, sizeof(int)*icount * 2);
+	return icount;
+}
+int Subject::getIcount()
+{
+	return icount;
 }
 void Subject::setColor(COLORREF color)
 {
